@@ -64,4 +64,33 @@ accum :: [Char] -> [Char]
 -- accum s = intercalate "-" $ map (\c -> replicate 2 c) s
 accum s = intercalate "-" $ zipWith (\idx ele -> toUpper ele:replicate (idx-1) (toLower ele)) [1..] s
 
+-- https://www.codewars.com/kata/57a429e253ba3381850000fb
 
+bmi :: Float -> Float -> String  
+bmi weight height
+        | bmiCalc <= 18.5 = "Underweight"
+        | bmiCalc <= 25.0 = "Normal"
+        | bmiCalc <= 30.0 = "Overweight"
+        | bmiCalc > 30.0 = "Obese"
+        | otherwise = "unknown"
+        where bmiCalc = weight/height^2
+
+-- https://www.codewars.com/kata/55f9b48403f6b87a7c0000bd/train/haskell
+paperwork :: Int -> Int -> Int
+paperwork n m
+      | n > 0 && m > 0= n * m
+      | otherwise = 0      
+
+-- https://www.codewars.com/kata/55f9bca8ecaa9eac7100004a/train/haskell
+past :: Int -> Int -> Int -> Int
+past h m s = (h*60*60 + m*60 + s)* 1000 
+
+-- https://www.codewars.com/kata/551b4501ac0447318f0009cd/train/haskell
+booleanToString :: Bool -> String
+booleanToString True = "True"
+booleanToString False = "False"
+
+
+-- https://www.codewars.com/kata/59ca8246d751df55cc00014c/
+hero :: Int -> Int -> Bool
+hero bullets dragons = dragons * 2 <= bullets
