@@ -21,9 +21,7 @@ century :: Int -> Int
 -- century year = (((year - 1)`div` 100) +1)
 century =  (+1) . (`div` 100) . subtract 1
 
-digitize :: Int -> [Int]
-digitize 0 = []
-digitize n = (n `mod` 10) : digitize (n `div` 10)
+
 
 countPositivesSumNegatives :: Maybe [Int] -> [Int]
 countPositivesSumNegatives Nothing = []
@@ -62,7 +60,7 @@ testAccum = do
 
 accum :: [Char] -> [Char]
 -- accum s = intercalate "-" $ map (\c -> replicate 2 c) s
-accum s = intercalate "-" $ zipWith (\idx ele -> toUpper ele:replicate (idx-1) (toLower ele)) [1..] s
+accum s = intercalate "-" $ zipWith (\idx ele -> Data.Char.toUpper ele:replicate (idx-1) (toLower ele)) [1..] s
 
 -- https://www.codewars.com/kata/57a429e253ba3381850000fb
 
@@ -94,3 +92,24 @@ booleanToString False = "False"
 -- https://www.codewars.com/kata/59ca8246d751df55cc00014c/
 hero :: Int -> Int -> Bool
 hero bullets dragons = dragons * 2 <= bullets
+
+-- https://www.codewars.com/kata/546e2562b03326a88e000020/train/haskell
+-- Apparently input can be negative with haskell version of that kata
+squareDigit :: Int -> Int
+squareDigit = undigitize . squareDigits . digitize
+
+digitize :: Int -> [Int]
+digitize n
+  | n <= 9  = [n]
+  | otherwise = digitize (n `quot` 10) ++ digitize (n `mod` 10)
+
+undigitize :: [Int] -> Int
+undigitize xs = read $ concatMap show xs
+
+squareDigits :: [Int] -> [Int]
+squareDigits = map (^2)
+
+-- https://www.codewars.com/kata/57eadb7ecd143f4c9c0000a3/train/haskell
+-- based on solution seen afterwards: take 1 is the same as head, but most importantly, map 2 times is a waste, I should have put (toUpper . head) in a single map
+getInitials :: String -> String
+getInitials s = intercalate "." $ map (take 1) $ words $ map toUpper s
